@@ -4,10 +4,44 @@
  */
 package com.mycompany.sublimacion_bogota.modelo;
 
-/**
- *
- * @author Usuario
- */
 public class TareaProduccion {
-    
+    private long idTarea;
+    private String descripcionTarea;
+    private String estadoTarea;
+    private double avanceTarea;
+    private long empleadoIdEmpleado;
+    private long produccionIdProduccion;
+
+    // Constructor vacío
+    public TareaProduccion() {}
+
+    // Constructor con parámetros
+    public TareaProduccion(long idTarea, String descripcionTarea, String estadoTarea,
+                           double avanceTarea, long empleadoIdEmpleado, long produccionIdProduccion) {
+        this.idTarea = idTarea;
+        this.descripcionTarea = descripcionTarea;
+        this.estadoTarea = estadoTarea;
+        this.avanceTarea = avanceTarea;
+        this.empleadoIdEmpleado = empleadoIdEmpleado;
+        this.produccionIdProduccion = produccionIdProduccion;
+    }
+
+    // Getters y Setters
+    public long getIdTarea() { return idTarea; }
+    public void setIdTarea(long idTarea) { this.idTarea = idTarea; }
+
+    public String getDescripcionTarea() { return descripcionTarea; }
+    public void setDescripcionTarea(String descripcionTarea) { this.descripcionTarea = descripcionTarea; }
+
+    public String getEstadoTarea() { return estadoTarea; }
+    public void setEstadoTarea(String estadoTarea) { this.estadoTarea = estadoTarea; }
+
+    public double getAvanceTarea() { return avanceTarea; }
+    public void setAvanceTarea(double avanceTarea) { this.avanceTarea = avanceTarea; }
+
+    public long getEmpleadoIdEmpleado() { return empleadoIdEmpleado; }
+    public void setEmpleadoIdEmpleado(long empleadoIdEmpleado) { this.empleadoIdEmpleado = empleadoIdEmpleado; }
+
+    public long getProduccionIdProduccion() { return produccionIdProduccion; }
+    public void setProduccionIdProduccion(long produccionIdProduccion) { this.produccionIdProduccion = produccionIdProduccion; }
 }

@@ -6,21 +6,45 @@ package com.mycompany.sublimacion_bogota.modelo;
 
 public class Usuario {
     private long idUsuario;
+    private String nombreUsuario;
+    private String apellidoUsuario;
     private String correoUsuario;
     private String contrasenaUsuario;
     private String rolUsuario;
 
     public Usuario() {}
 
-    public Usuario(long idUsuario, String correoUsuario, String contrasenaUsuario, String rolUsuario) {
+    // Constructor completo
+    public Usuario(long idUsuario, String nombreUsuario, String apellidoUsuario,
+                   String correoUsuario, String contrasenaUsuario) {
         this.idUsuario = idUsuario;
+        this.nombreUsuario = nombreUsuario;
+        this.apellidoUsuario = apellidoUsuario;
+        this.correoUsuario = correoUsuario;
+        this.contrasenaUsuario = contrasenaUsuario;
+        this.rolUsuario = "Usuario"; // valor por defecto si no lo pasas
+    }
+
+    // Constructor con rol explícito
+    public Usuario(long idUsuario, String nombreUsuario, String apellidoUsuario,
+                   String correoUsuario, String contrasenaUsuario, String rolUsuario) {
+        this.idUsuario = idUsuario;
+        this.nombreUsuario = nombreUsuario;
+        this.apellidoUsuario = apellidoUsuario;
         this.correoUsuario = correoUsuario;
         this.contrasenaUsuario = contrasenaUsuario;
         this.rolUsuario = rolUsuario;
     }
 
+    // Getters y Setters
     public long getIdUsuario() { return idUsuario; }
     public void setIdUsuario(long idUsuario) { this.idUsuario = idUsuario; }
+
+    public String getNombreUsuario() { return nombreUsuario; }
+    public void setNombreUsuario(String nombreUsuario) { this.nombreUsuario = nombreUsuario; }
+
+    public String getApellidoUsuario() { return apellidoUsuario; }
+    public void setApellidoUsuario(String apellidoUsuario) { this.apellidoUsuario = apellidoUsuario; }
 
     public String getCorreoUsuario() { return correoUsuario; }
     public void setCorreoUsuario(String correoUsuario) { this.correoUsuario = correoUsuario; }

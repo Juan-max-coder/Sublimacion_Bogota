@@ -11,16 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MaterialDAO {
-    private Connection conn;
-
-    public MaterialDAO() {
-        conn = Conexion.getConnection();
-    }
 
     // CREATE
     public boolean insertarMaterial(Material material) {
         String sql = "INSERT INTO Material (nombreMaterial, tipoMaterial, colorMaterial, cantidadDisponibleMaterial, Cliente_idCliente) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexion.getConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, material.getNombreMaterial());
             ps.setString(2, material.getTipoMaterial());
             ps.setString(3, material.getColorMaterial());
@@ -38,7 +34,8 @@ public class MaterialDAO {
     public List<Material> listarMateriales() {
         List<Material> lista = new ArrayList<>();
         String sql = "SELECT * FROM Material";
-        try (Statement st = conn.createStatement();
+        try (Connection conn = Conexion.getConexion();
+             Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
             while (rs.next()) {
                 Material mat = new Material(
@@ -60,7 +57,8 @@ public class MaterialDAO {
     // UPDATE
     public boolean actualizarMaterial(Material material) {
         String sql = "UPDATE Material SET nombreMaterial=?, tipoMaterial=?, colorMaterial=?, cantidadDisponibleMaterial=?, Cliente_idCliente=? WHERE idMaterial=?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexion.getConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, material.getNombreMaterial());
             ps.setString(2, material.getTipoMaterial());
             ps.setString(3, material.getColorMaterial());
@@ -78,7 +76,8 @@ public class MaterialDAO {
     // DELETE
     public boolean eliminarMaterial(long idMaterial) {
         String sql = "DELETE FROM Material WHERE idMaterial=?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexion.getConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, idMaterial);
             ps.executeUpdate();
             return true;

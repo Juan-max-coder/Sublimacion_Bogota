@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-ackage com.mycompany.sublimacion_bogota.dao;
+package com.mycompany.sublimacion_bogota.dao;
 
 import com.mycompany.sublimacion_bogota.conexion.Conexion;
 import com.mycompany.sublimacion_bogota.modelo.Cliente;
@@ -11,16 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClienteDAO {
-    private Connection conn;
-
-    public ClienteDAO() {
-        conn = Conexion.getConnection();
-    }
-
     // CREATE
     public boolean insertarCliente(Cliente cliente) {
         String sql = "INSERT INTO Cliente (nombreCliente, apellidoCliente, direccionCliente, telefonoCliente, correoCliente, tipoCliente) VALUES (?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexion.getConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, cliente.getNombreCliente());
             ps.setString(2, cliente.getApellidoCliente());
             ps.setString(3, cliente.getDireccionCliente());
@@ -39,7 +34,8 @@ public class ClienteDAO {
     public List<Cliente> listarClientes() {
         List<Cliente> lista = new ArrayList<>();
         String sql = "SELECT * FROM Cliente";
-        try (Statement st = conn.createStatement();
+        try (Connection conn = Conexion.getConexion();
+             Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
             while (rs.next()) {
                 Cliente cli = new Cliente(
@@ -62,7 +58,8 @@ public class ClienteDAO {
     // UPDATE
     public boolean actualizarCliente(Cliente cliente) {
         String sql = "UPDATE Cliente SET nombreCliente=?, apellidoCliente=?, direccionCliente=?, telefonoCliente=?, correoCliente=?, tipoCliente=? WHERE idCliente=?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexion.getConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, cliente.getNombreCliente());
             ps.setString(2, cliente.getApellidoCliente());
             ps.setString(3, cliente.getDireccionCliente());
@@ -81,7 +78,8 @@ public class ClienteDAO {
     // DELETE
     public boolean eliminarCliente(long idCliente) {
         String sql = "DELETE FROM Cliente WHERE idCliente=?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexion.getConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, idCliente);
             ps.executeUpdate();
             return true;

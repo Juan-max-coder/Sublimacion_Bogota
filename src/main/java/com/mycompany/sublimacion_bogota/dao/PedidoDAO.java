@@ -11,16 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PedidoDAO {
-    private Connection conn;
-
-    public PedidoDAO() {
-        conn = Conexion.getConnection();
-    }
 
     // CREATE
     public boolean insertarPedido(Pedido pedido) {
         String sql = "INSERT INTO Pedido (fechaRegistroPedido, estadoPedido, prioridadPedido, fechaEntregaEstimadaPedido, Material_idMaterial, Cliente_idCliente, Empleado_idEmpleado) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexion.getConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setTimestamp(1, new Timestamp(pedido.getFechaRegistroPedido().getTime()));
             ps.setString(2, pedido.getEstadoPedido());
             ps.setString(3, pedido.getPrioridadPedido());
@@ -40,7 +36,8 @@ public class PedidoDAO {
     public List<Pedido> listarPedidos() {
         List<Pedido> lista = new ArrayList<>();
         String sql = "SELECT * FROM Pedido";
-        try (Statement st = conn.createStatement();
+        try (Connection conn = Conexion.getConexion();
+             Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
             while (rs.next()) {
                 Pedido ped = new Pedido(
@@ -64,7 +61,8 @@ public class PedidoDAO {
     // UPDATE
     public boolean actualizarPedido(Pedido pedido) {
         String sql = "UPDATE Pedido SET fechaRegistroPedido=?, estadoPedido=?, prioridadPedido=?, fechaEntregaEstimadaPedido=?, Material_idMaterial=?, Cliente_idCliente=?, Empleado_idEmpleado=? WHERE idPedido=?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexion.getConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setTimestamp(1, new Timestamp(pedido.getFechaRegistroPedido().getTime()));
             ps.setString(2, pedido.getEstadoPedido());
             ps.setString(3, pedido.getPrioridadPedido());
@@ -84,7 +82,8 @@ public class PedidoDAO {
     // DELETE
     public boolean eliminarPedido(long idPedido) {
         String sql = "DELETE FROM Pedido WHERE idPedido=?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexion.getConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, idPedido);
             ps.executeUpdate();
             return true;

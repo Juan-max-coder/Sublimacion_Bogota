@@ -10,17 +10,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmpleadoDAO {
-    private Connection conn;
-
-    public EmpleadoDAO() {
-        conn = Conexion.getConexion();
-    }
-
-    // CREATE
+public class EmpleadoDAO {// CREATE
     public boolean insertarEmpleado(Empleado empleado) {
         String sql = "INSERT INTO Empleado (nombreEmpleado, cargoEmpleado, areaEmpleado, contactoEmpleado, Usuario_idUsuario) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexion.getConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, empleado.getNombreEmpleado());
             ps.setString(2, empleado.getCargoEmpleado());
             ps.setString(3, empleado.getAreaEmpleado());
@@ -38,7 +32,8 @@ public class EmpleadoDAO {
     public List<Empleado> listarEmpleados() {
         List<Empleado> lista = new ArrayList<>();
         String sql = "SELECT * FROM Empleado";
-        try (Statement st = conn.createStatement();
+        try (Connection conn = Conexion.getConexion();
+             Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
             while (rs.next()) {
                 Empleado emp = new Empleado(
@@ -60,7 +55,8 @@ public class EmpleadoDAO {
     // UPDATE
     public boolean actualizarEmpleado(Empleado empleado) {
         String sql = "UPDATE Empleado SET nombreEmpleado=?, cargoEmpleado=?, areaEmpleado=?, contactoEmpleado=?, Usuario_idUsuario=? WHERE idEmpleado=?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexion.getConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, empleado.getNombreEmpleado());
             ps.setString(2, empleado.getCargoEmpleado());
             ps.setString(3, empleado.getAreaEmpleado());
@@ -78,7 +74,8 @@ public class EmpleadoDAO {
     // DELETE
     public boolean eliminarEmpleado(long idEmpleado) {
         String sql = "DELETE FROM Empleado WHERE idEmpleado=?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexion.getConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, idEmpleado);
             ps.executeUpdate();
             return true;
